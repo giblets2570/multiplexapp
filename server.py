@@ -5,6 +5,7 @@ import typing
 from diffie_hellman import find_PG
 import random
 from encryption import integer_to_aes_key, encrypt_message, decrypt_message
+import typer
 
 
 class Server:
@@ -75,7 +76,11 @@ class Server:
                 callback(key.fileobj, mask)
 
 
-server = Server()
+def main(host: str = 'localhost', port: int = 1239, backlog: int = 100):
+    server = Server(host, port, backlog)
+    server.start()
 
 
-server.start()
+if __name__ == '__main__':
+
+    typer.run(main)

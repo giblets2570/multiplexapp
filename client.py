@@ -4,6 +4,7 @@ import threading
 import queue
 import random
 from encryption import integer_to_aes_key, encrypt_message, decrypt_message
+import typer
 
 
 class Client:
@@ -50,7 +51,7 @@ class Client:
             print("error occured in sending:", e)
 
     def start(self):
-        client.send(json.dumps({"t": 'pg'}).encode())
+        self.send(json.dumps({"t": 'pg'}).encode())
 
         data = self.q.get()
 
@@ -64,7 +65,7 @@ class Client:
 
         B = (self.g ** self.b) % self.p
 
-        client.send(json.dumps({"t": "B", "B": B}).encode())
+        self.send(json.dumps({"t": "B", "B": B}).encode())
 
         data = self.q.get()
 
@@ -85,5 +86,11 @@ class Client:
             pass
 
 
-client = Client()
-client.start()
+def main(host: str = 'localhost', port: int = 1239):
+    client = Client(host, port)
+    client.start()
+
+
+if __name__ == '__main__':
+
+    typer.run(main)
