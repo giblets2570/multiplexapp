@@ -40,21 +40,9 @@ def find_primative_root(p: int) -> int:
     return g
 
 
-P = generate_prime()
-G = find_primative_root(P)
+def find_PG():
 
-a = random.randint(2, 1000)
-b = random.randint(2, 1000)
+    P = generate_prime()
+    G = find_primative_root(P)
 
-A = (G ** a) % P
-B = (G ** b) % P
-
-
-As = (B ** a) % P
-Bs = (A ** b) % P
-
-
-assert As == Bs
-
-
-print(P, G)
+    return P, G
